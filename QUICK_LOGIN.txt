@@ -1,0 +1,24 @@
+╔══════════════════════════════════════════════════════════════╗
+║           NTCC CMA - Quick Login Reference                   ║
+╚══════════════════════════════════════════════════════════════╝
+
+🔐 ADMIN ACCOUNT (Full Access)
+   Email:    admin@ntcc-cma.demo
+   Password: Admin@123
+
+✏️  EDITOR ACCOUNT (Manage Content)
+   Email:    editor@ntcc-cma.demo
+   Password: Editor@123
+
+👀 VIEWER ACCOUNT (Read Only)
+   Email:    viewer@ntcc-cma.demo
+   Password: Viewer@123
+
+════════════════════════════════════════════════════════════════
+✅ Database: Fully Configured & Working
+✅ Sample Songs: 3 songs included
+✅ RLS Security: All policies active
+✅ Build Status: Production ready
+════════════════════════════════════════════════════════════════
+
+📖 Full documentation: See DEMO_ACCOUNTS.md

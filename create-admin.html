@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Admin User</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #4F46E5;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #4338CA;
+        }
+        .message {
+            padding: 10px;
+            margin-top: 15px;
+            border-radius: 5px;
+        }
+        .success {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+        .error {
+            background: #FEE2E2;
+            color: #991B1B;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Create Demo Users</h1>
+        <div id="message"></div>
+
+        <div class="form-group">
+            <label for="role">Select Role:</label>
+            <select id="role">
+                <option value="admin">Admin</option>
+                <option value="editor">Editor</option>
+                <option value="viewer">Viewer</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="fullName">Full Name:</label>
+            <input type="text" id="fullName" value="Demo User">
+        </div>
+
+        <button onclick="createUser()">Create User</button>
+        <button onclick="createAllUsers()" style="background: #059669; margin-top: 10px;">Create All Demo Users</button>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://fozsbkbfwofycvhrmkqy.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZvenNia2Jmd29meWN2aHJta3F5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI3MTcxNDksImV4cCI6MjA3ODI5MzE0OX0.1nyd5SLS1Zef8AhWrvV1l9prXeXHdHXNTditsniwe0U';
+
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        function showMessage(text, isError = false) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = text;
+            messageDiv.className = 'message ' + (isError ? 'error' : 'success');
+        }
+
+        async function createUser() {
+            const role = document.getElementById('role').value;
+            const fullName = document.getElementById('fullName').value;
+            const email = `${role}@demo.com`;
+            const password = 'demo123';
+
+            showMessage('Creating user...');
+
+            try {
+                // Sign up the user
+                const { data: authData, error: authError } = await supabase.auth.signUp({
+                    email: email,
+                    password: password,
+                    options: {
+                        data: {
+                            full_name: fullName
+                        }
+                    }
+                });
+
+                if (authError) throw authError;
+
+                // Wait a moment for trigger to create profile
+                await new Promise(resolve => setTimeout(resolve, 1000));
+
+                // Update the profile role
+                const { error: updateError } = await supabase
+                    .from('profiles')
+                    .update({ role: role, full_name: fullName })
+                    .eq('id', authData.user.id);
+
+                if (updateError) throw updateError;
+
+                // Sign out
+                await supabase.auth.signOut();
+
+                showMessage(`✓ Created ${role}@demo.com with password: demo123`);
+            } catch (error) {
+                showMessage(`Error: ${error.message}`, true);
+            }
+        }
+
+        async function createAllUsers() {
+            const roles = [
+                { role: 'admin', name: 'Admin User' },
+                { role: 'editor', name: 'Editor User' },
+                { role: 'viewer', name: 'Viewer User' }
+            ];
+
+            showMessage('Creating all demo users...');
+
+            for (const { role, name } of roles) {
+                try {
+                    const email = `${role}@demo.com`;
+                    const password = 'demo123';
+
+                    // Sign up the user
+                    const { data: authData, error: authError } = await supabase.auth.signUp({
+                        email: email,
+                        password: password,
+                        options: {
+                            data: {
+                                full_name: name
+                            }
+                        }
+                    });
+
+                    if (authError) {
+                        console.error(`Error creating ${role}:`, authError);
+                        continue;
+                    }
+
+                    // Wait for trigger
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+
+                    // Update the profile role
+                    const { error: updateError } = await supabase
+                        .from('profiles')
+                        .update({ role: role, full_name: name })
+                        .eq('id', authData.user.id);
+
+                    if (updateError) {
+                        console.error(`Error updating ${role} profile:`, updateError);
+                    }
+
+                    // Sign out
+                    await supabase.auth.signOut();
+
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                } catch (error) {
+                    console.error(`Error with ${role}:`, error);
+                }
+            }
+
+            showMessage('✓ All demo users created! Login with admin@demo.com / demo123');
+        }
+    </script>
+</body>
+</html>
