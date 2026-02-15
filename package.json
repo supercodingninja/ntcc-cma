@@ -18,7 +18,9 @@
     "react-dom": "^19.2.0",
     "react-pdf": "^10.2.0",
     "react-router-dom": "^7.9.5",
-    "xlsx": "^0.18.5"
+    "xlsx": "^0.18.5",
+    "opensheetmusicdisplay": "^1.8.0",
+    "vexflow": "^4.2.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
