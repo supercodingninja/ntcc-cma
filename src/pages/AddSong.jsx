@@ -5,6 +5,7 @@ import FileUploadManager from '../components/FileUploadManager'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
 import { AlertCircle, Save, X } from 'lucide-react'
+import SibeliusUploader from '../components/SibeliusUploader'
 
 export default function AddSong() {
   const navigate = useNavigate()
