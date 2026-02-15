@@ -1,3 +1,4 @@
+/* feat(components): add Sibelius file uploader with drag-and-drop support */
 import React, { useState, useRef } from 'react';
 import { Upload, FileMusic, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 
