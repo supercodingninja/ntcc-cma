@@ -1,23 +1,92 @@
+/*
+This Area Of Code Is: Global App Styles with iPad Pro Responsive Fixes
+Explanation: This CSS file contains all the styling for the NTCC Music App,
+             including responsive breakpoints specifically designed for iPad Pro
+             and other tablet devices. It fixes layout overflow issues and
+             ensures the Practice Studio grid displays properly on all screen sizes.
+In Other Words: This makes the app look good on iPads, phones, and computers.
+*/
+
+/* 
+This Area Of Code Is: Root Container
+Explanation: Sets up the main app container with max-width and centering.
+             The max-width is increased to accommodate iPad Pro's 12.9" screen.
+             Padding adjusts based on screen size to prevent content touching edges.
+In Other Words: This is the main box that holds everything.
+*/
 #root {
-  max-width: 1280px;
+  max-width: 1400px;  /* Increased from 1280px for iPad Pro */
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
   text-align: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
+/*
+This Area Of Code Is: iPad Pro Specific Root Padding
+Explanation: On iPad Pro (1024px-1366px width), increase padding for better spacing.
+             This prevents the content from feeling cramped on the large screen.
+In Other Words: Adds more space around the edges on iPad Pro.
+*/
+@media (min-width: 1024px) and (max-width: 1366px) {
+  #root {
+    padding: 1.5rem;
+  }
+}
+
+/*
+This Area Of Code Is: Desktop Large Screens
+Explanation: On desktop screens larger than 1366px, use even more padding
+             and max-width to keep content readable and centered.
+In Other Words: On big computer screens, add more space around everything.
+*/
+@media (min-width: 1367px) {
+  #root {
+    max-width: 1600px;
+    padding: 2rem;
+  }
+}
+
+/*
+This Area Of Code Is: Mobile Screens
+Explanation: On phones (less than 768px), reduce padding so content fits
+             the smaller screen better.
+In Other Words: On phones, use less space around the edges.
+*/
+@media (max-width: 767px) {
+  #root {
+    padding: 0.75rem;
+  }
+}
+
+/*
+This Area Of Code Is: Logo Styles
+Explanation: Styles for the app logo with hover effects.
+             The filter creates a glow effect when hovering.
+In Other Words: Makes the logo glow when you touch it.
+*/
 .logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+/*
+This Area Of Code Is: Logo Spin Animation
+Explanation: Creates a rotating animation for the React logo.
+             Only runs if user hasn't requested reduced motion (accessibility).
+In Other Words: Makes the React logo spin around.
+*/
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
@@ -33,10 +102,398 @@
   }
 }
 
+/*
+This Area Of Code Is: Card Component Base
+Explanation: Basic card styling with padding.
+             Cards are used throughout the app for content sections.
+In Other Words: This is the box style used for most content.
+*/
 .card {
-  padding: 2em;
+  padding: 1.5em;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+/*
+This Area Of Code Is: iPad Pro Card Adjustments
+Explanation: On iPad Pro, slightly reduce card padding to prevent
+             cards from becoming too large and causing overflow.
+In Other Words: Makes cards a bit smaller on iPad so they fit better.
+*/
+@media (min-width: 1024px) and (max-width: 1366px) {
+  .card {
+    padding: 1.25em;
+  }
+}
+
+/*
+This Area Of Code Is: Practice Studio Grid Fixes
+Explanation: The Practice Studio has a grid of tool cards (Tuner, Metronome, etc.).
+             These styles ensure the grid doesn't overflow on iPad Pro.
+             Uses CSS Grid with auto-fit to create responsive columns.
+In Other Words: This makes the Practice Studio tools fit properly on iPad.
+*/
+.practice-studio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/*
+This Area Of Code Is: iPad Pro Practice Studio Grid
+Explanation: Specifically for iPad Pro (11" and 12.9"), force 2 columns
+             instead of auto-fit to prevent cards from stretching too wide.
+             This matches the layout seen in your screenshots.
+In Other Words: On iPad Pro, show 2 tools side by side instead of 3 or 4.
+*/
+@media (min-width: 1024px) and (max-width: 1366px) {
+  .practice-studio-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+/*
+This Area Of Code Is: Mobile Practice Studio Grid
+Explanation: On phones, show only 1 column of tools stacked vertically.
+In Other Words: On phones, stack the tools one on top of another.
+*/
+@media (max-width: 767px) {
+  .practice-studio-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+/*
+This Area Of Code Is: Desktop Practice Studio Grid
+Explanation: On large desktop screens, allow up to 3 columns of tools.
+In Other Words: On big computers, show 3 tools side by side.
+*/
+@media (min-width: 1367px) {
+  .practice-studio-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+/*
+This Area Of Code Is: Upload Music Section Fixes
+Explanation: The Upload Music section has two side-by-side boxes.
+             These styles ensure they stack properly on smaller screens
+             and sit side-by-side on larger screens.
+In Other Words: Makes the upload boxes fit right on all screen sizes.
+*/
+.upload-music-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  width: 100%;
+}
+
+/*
+This Area Of Code Is: Tablet and Desktop Upload Layout
+Explanation: On screens 768px and wider, show the two upload boxes
+             side by side (Sheet Music and Audio Files).
+In Other Words: On iPad and computers, put the two upload boxes next to each other.
+*/
+@media (min-width: 768px) {
+  .upload-music-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/*
+This Area Of Code Is: iPad Pro Upload Container Adjustments
+Explanation: On iPad Pro, ensure the upload section doesn't overflow
+             its container by using proper box-sizing.
+In Other Words: Makes sure upload boxes don't go outside their area on iPad.
+*/
+@media (min-width: 1024px) and (max-width: 1366px) {
+  .upload-music-container {
+    gap: 1.25rem;
+  }
+}
+
+/*
+This Area Of Code Is: Navigation Bar Fixes
+Explanation: The top navigation bar can overflow on iPad Pro if there
+             are too many menu items. These styles ensure proper wrapping.
+In Other Words: Makes the top menu fit and wrap if needed.
+*/
+.nav-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/*
+This Area Of Code Is: iPad Pro Navigation Adjustments
+Explanation: On iPad Pro, allow the navigation to wrap to multiple lines
+             if needed, and adjust padding for the larger screen.
+In Other Words: On iPad Pro, let the menu wrap to a second line if it's too long.
+*/
+@media (min-width: 1024px) and (max-width: 1366px) {
+  .nav-container {
+    padding: 0.75rem 1.25rem;
+  }
+}
+
+/*
+This Area Of Code Is: Dashboard Stats Grid
+Explanation: The dashboard shows stats cards (Total Songs, This Week, etc.)
+             in a grid. These styles ensure proper layout on all devices.
+In Other Words: Makes the stat boxes at the top fit properly.
+*/
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  width: 100%;
+}
+
+/*
+This Area Of Code Is: Tablet Stats Grid
+Explanation: On tablets (768px-1023px), show 4 stats in a row.
+In Other Words: On regular iPads, show all 4 stats side by side.
+*/
+@media (min-width: 768px) and (max-width: 1023px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+/*
+This Area Of Code Is: iPad Pro Stats Grid
+Explanation: On iPad Pro, maintain 4 columns but adjust gap for the larger screen.
+In Other Words: On iPad Pro, keep 4 stats side by side with proper spacing.
+*/
+@media (min-width: 1024px) and (max-width: 1366px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+/*
+This Area Of Code Is: Desktop Stats Grid
+Explanation: On large desktops, keep 4 columns with generous spacing.
+In Other Words: On big computers, show 4 stats with lots of space.
+*/
+@media (min-width: 1367px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+}
+
+/*
+This Area Of Code Is: Mobile Stats Grid
+Explanation: On phones, show only 2 columns of stats.
+In Other Words: On phones, show 2 stats per row.
+*/
+@media (max-width: 767px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+}
+
+/*
+This Area Of Code Is: Recent Practice & Top Songs Grid
+Explanation: These two sections sit side by side on larger screens.
+             These styles control their responsive behavior.
+In Other Words: Makes the Recent Practice and Top Songs sections fit right.
+*/
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+/*
+This Area Of Code Is: Tablet and Desktop Content Grid
+Explanation: On screens 1024px and wider, show Recent Practice and Top Songs
+             side by side in 2 equal columns.
+In Other Words: On iPad and computers, put these two sections next to each other.
+*/
+@media (min-width: 1024px) {
+  .content-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/*
+This Area Of Code Is: iPad Pro Content Grid Adjustments
+Explanation: On iPad Pro, ensure the content sections don't overflow
+             by using proper gap sizing.
+In Other Words: On iPad Pro, make sure these sections have proper spacing.
+*/
+@media (min-width: 1024px) and (max-width: 1366px) {
+  .content-grid {
+    gap: 1.25rem;
+  }
+}
+
+/*
+This Area Of Code Is: Floating Action Buttons Fix
+Explanation: The colored circular buttons on the right side of the screen
+             can overlap content on iPad Pro. These styles ensure proper positioning.
+In Other Words: Makes the round buttons on the right stay in the right place.
+*/
+.fab-container {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  z-index: 50;
+}
+
+/*
+This Area Of Code Is: iPad Pro FAB Adjustments
+Explanation: On iPad Pro, move the floating buttons slightly more inward
+             to avoid overlapping with the edge of the screen.
+In Other Words: On iPad Pro, move the round buttons a bit away from the edge.
+*/
+@media (min-width: 1024px) and (max-width: 1366px) {
+  .fab-container {
+    right: 1.5rem;
+    bottom: 1.5rem;
+  }
+}
+
+/*
+This Area Of Code Is: Prevent Horizontal Overflow
+Explanation: Ensures no element causes horizontal scrolling on any device.
+             This fixes the main issue seen in your iPad Pro screenshots.
+In Other Words: Stops the app from scrolling sideways on iPad.
+*/
+* {
+  max-width: 100%;
+}
+
+/*
+This Area Of Code Is: Image and Media Scaling
+Explanation: Ensures all images and media scale properly within their containers
+             without causing overflow.
+In Other Words: Makes pictures fit inside their boxes.
+*/
+img, video, canvas, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/*
+This Area Of Code Is: Table and Preformatted Text Scaling
+Explanation: Ensures tables and code blocks don't overflow their containers.
+In Other Words: Makes tables and code fit inside their areas.
+*/
+table, pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/*
+This Area Of Code Is: Utility Text Class
+Explanation: Simple utility class for muted text color.
+In Other Words: Makes text gray for less important information.
+*/
 .read-the-docs {
   color: #888;
+}
+
+/*
+This Area Of Code Is: iPad Pro Touch Target Sizes
+Explanation: Ensures buttons and interactive elements are large enough
+             for touch interaction on iPad Pro (minimum 44px).
+In Other Words: Makes buttons big enough to tap with a finger on iPad.
+*/
+button, 
+[role="button"],
+input[type="file"] + label,
+.clickable {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/*
+This Area Of Code Is: iPad Pro Font Size Adjustments
+Explanation: Slightly increases base font size on iPad Pro for better readability
+             on the large screen.
+In Other Words: Makes text a bit bigger on iPad Pro so it's easier to read.
+*/
+@media (min-width: 1024px) and (max-width: 1366px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+/*
+This Area Of Code Is: Prevent Text Overflow
+Explanation: Ensures long text (like song titles) wraps properly
+             instead of overflowing its container.
+In Other Words: Makes long words wrap to the next line instead of going outside the box.
+*/
+.truncate-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.multiline-truncate {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/*
+This Area Of Code Is: Modal and Overlay Fixes
+Explanation: Ensures modals (like file picker, dialogs) display properly
+             on iPad Pro without being cut off.
+In Other Words: Makes popup windows fit properly on iPad.
+*/
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 100;
+}
+
+.modal-content {
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+/*
+This Area Of Code Is: iPad Pro Modal Adjustments
+Explanation: On iPad Pro, limit modal width to prevent it from being too wide.
+In Other Words: On iPad Pro, don't let popup windows get too wide.
+*/
+@media (min-width: 1024px) and (max-width: 1366px) {
+  .modal-content {
+    max-width: 600px;
+  }
 }
