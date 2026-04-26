@@ -5,9 +5,12 @@
   It loads the Vite-bundled JavaScript, sets the viewport for mobile responsiveness,
   defines PWA manifest and theme colors, and provides the root DOM node (div#root)
   where React mounts the application. The title and meta tags reflect NTCC branding.
+  The splash screen uses the worship gold and deep navy palette from the Adoración
+  visual identity, ensuring brand consistency from the very first paint.
 
   IN OTHER WORDS: This is the door to the app. It tells the browser what the app is called,
-  how to display it on phones and tablets, and where to start the React code.
+  how to display it on phones and tablets, and where to start the React code. The loading
+  screen matches the church's gold and dark blue colors.
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -46,11 +49,12 @@
       THIS AREA OF CODE IS: Inline Critical CSS for Splash Screen
 
       EXPLANATION: Minimal CSS rendered before React loads to prevent flash of unstyled
-      content (FOUC). Displays a branded loading screen with the NTCC color palette
-      while the JavaScript bundle downloads and initializes.
+      content (FOUC). Displays a branded loading screen with the NTCC/Adoración-inspired
+      color palette — deep navy background with gold accent text and a subtle pulsing
+      animation. This matches the visual identity of the worship platform aesthetic.
 
-      IN OTHER WORDS: Shows a pretty loading screen with the church's colors while
-      the app is getting ready, so users don't see a blank white page.
+      IN OTHER WORDS: Shows a pretty loading screen with the church's dark blue and gold
+      colors while the app is getting ready, so users don't see a blank white page.
     -->
     <style>
       #root:empty::before {
@@ -58,7 +62,7 @@
         display: block;
         position: fixed;
         inset: 0;
-        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 40%, #16213e 100%);
         z-index: 9999;
       }
       #root:empty::after {
@@ -69,16 +73,30 @@
         left: 50%;
         transform: translate(-50%, -50%);
         font-family: 'Cormorant Garamond', serif;
-        font-size: 1.75rem;
+        font-size: 2rem;
         font-weight: 600;
-        color: #e8d5b7;
-        letter-spacing: 0.05em;
+        color: #e8a838;
+        letter-spacing: 0.08em;
+        text-shadow: 0 0 30px rgba(232, 168, 56, 0.3);
         z-index: 10000;
-        animation: pulse 2s ease-in-out infinite;
+        animation: pulse 2.5s ease-in-out infinite;
+      }
+      #root:empty .splash-subtitle {
+        display: block;
+        position: fixed;
+        top: calc(50% + 3rem);
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: 'Inter', sans-serif;
+        font-size: 0.875rem;
+        color: rgba(232, 168, 56, 0.6);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        z-index: 10000;
       }
       @keyframes pulse {
-        0%, 100% { opacity: 0.6; }
-        50% { opacity: 1; }
+        0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.98); }
+        50% { opacity: 1; transform: translate(-50%, -50%) scale(1.02); }
       }
     </style>
   <base target="_blank">
