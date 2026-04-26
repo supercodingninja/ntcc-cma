@@ -1,23 +1,137 @@
-<!doctype html>
+<!--
+  THIS AREA OF CODE IS: HTML Entry Point for NTCC Music App
+
+  EXPLANATION: This is the single HTML file that bootstraps the entire React application.
+  It loads the Vite-bundled JavaScript, sets the viewport for mobile responsiveness,
+  defines PWA manifest and theme colors, and provides the root DOM node (div#root)
+  where React mounts the application. The title and meta tags reflect NTCC branding.
+
+  IN OTHER WORDS: This is the door to the app. It tells the browser what the app is called,
+  how to display it on phones and tablets, and where to start the React code.
+-->
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/img_1194.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
-    <title>The NTCC Music App</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#1a1a2e" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="description" content="NTCC Music App — Worship Platform & Church Music Management System. A personal gift from Reverend Frederick D. Thomas, Jr. to New Testament Christian Churches of America, INC." />
+    <meta name="author" content="Reverend Frederick D. Thomas, Jr., NTCC Graham, WA" />
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-touch-icon-120x120.png" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
+
+    <!-- Preconnect to Supabase for faster API calls -->
+    <link rel="preconnect" href="https://fozsbkbfwofycvhrmkqy.supabase.co" />
+
+    <!-- Google Fonts: Inter for UI, Cormorant Garamond for worship headings -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <title>NTCC Music App</title>
+
+    <!-- 
+      THIS AREA OF CODE IS: Inline Critical CSS for Splash Screen
+
+      EXPLANATION: Minimal CSS rendered before React loads to prevent flash of unstyled
+      content (FOUC). Displays a branded loading screen with the NTCC color palette
+      while the JavaScript bundle downloads and initializes.
+
+      IN OTHER WORDS: Shows a pretty loading screen with the church's colors while
+      the app is getting ready, so users don't see a blank white page.
+    -->
+    <style>
+      #root:empty::before {
+        content: '';
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        z-index: 9999;
+      }
+      #root:empty::after {
+        content: 'NTCC Music App';
+        display: block;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.75rem;
+        font-weight: 600;
+        color: #e8d5b7;
+        letter-spacing: 0.05em;
+        z-index: 10000;
+        animation: pulse 2s ease-in-out infinite;
+      }
+      @keyframes pulse {
+        0%, 100% { opacity: 0.6; }
+        50% { opacity: 1; }
+      }
+    </style>
+  <base target="_blank">
+</head>
+
+  <body>
+    <!-- 
+      THIS AREA OF CODE IS: React Mount Point
+
+      EXPLANATION: The single div where the entire React application tree is rendered.
+      ReactDOM.createRoot() targets this element and replaces its contents with the
+      full component hierarchy defined in src/main.tsx and src/App.tsx.
+
+      IN OTHER WORDS: This empty box is where the entire app magically appears
+      once React starts running.
+    -->
+    <div id="root"></div>
+
+    <!-- 
+      THIS AREA OF CODE IS: Vite Module Script Entry
+
+      EXPLANATION: Loads the Vite-bundled JavaScript application. The "type=module"
+      attribute enables ES module loading. Vite's build process replaces this with
+      the hashed production bundle path. In development, Vite's dev server serves
+      this directly with hot module replacement (HMR).
+
+      IN OTHER WORDS: This line loads all the JavaScript code that makes the app work.
+    -->
+    <script type="module" src="/src/main.tsx"></script>
+
+    <!-- 
+      THIS AREA OF CODE IS: Service Worker Registration (PWA)
+
+      EXPLANATION: Registers the service worker for offline functionality, background
+      sync, and push notifications. The service worker (sw.js) caches assets and
+      enables the app to work without an internet connection after first load.
+      Wrapped in a try-catch to gracefully degrade if service workers are unsupported.
+
+      IN OTHER WORDS: This makes the app work even when there's no WiFi, like a
+      real phone app instead of just a website.
+    -->
     <script>
-      if (typeof pdfjsLib !== 'undefined') {
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-        window['pdfjs-dist/build/pdf'] = pdfjsLib;
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+              console.log('Service Worker registered: ', registration.scope);
+            })
+            .catch(function(error) {
+              console.log('Service Worker registration failed: ', error);
+            });
+        });
       }
     </script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
