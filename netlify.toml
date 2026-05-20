@@ -71,4 +71,4 @@
 
 [context.branch-deploy.environment]
   VITE_SUPABASE_URL = "https://fozsbkbfwofycvhrmkqy.supabase.co"
-  VITE_SUPABASE_ANON_KEY = 
+  VITE_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZvenNia2Jmd29meWN2aHJta3F5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI3MTcxNDksImV4cCI6MjA3ODI5MzE0OX0.1nyd5SLS1Zef8AhWrvV1l9prXeXHdHXNTditsniwe0U"
