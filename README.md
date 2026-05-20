@@ -88,6 +88,10 @@ The app will be available at http://localhost:5173
 ├── 📋 tsconfig.json           # TypeScript configuration
 ├── 🌐 netlify.toml            # Netlify deployment config
 └── 📖 README.md               # This file
+Manifest |
+
+---
+
 🎯 Feature Modules
 I. Core Worship
  • Multi-Language Worship (47+ languages)
