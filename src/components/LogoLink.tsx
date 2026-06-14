@@ -295,7 +295,7 @@ export function LogoLinkExternal({
  *
  * In Other Words:
  * "This code was built by Rev. Frederick Thomas for NTCC Graham's
- * Spanish Worship Team."
+ * English and Spanish Worship Teams."
  * ============================================
  */
 
